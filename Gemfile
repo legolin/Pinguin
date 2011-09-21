@@ -13,3 +13,4 @@ gem 'daemons'
 # Sing and dance
 gem 'sinatra'
 gem 'json'
+gem 'mongrel'
