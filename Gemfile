@@ -9,3 +9,7 @@ gem 'typhoeus'
 
 gem 'system_timer'
 gem 'daemons'
+
+# Sing and dance
+gem 'sinatra'
+gem 'json'
