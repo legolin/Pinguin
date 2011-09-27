@@ -2,7 +2,7 @@ require 'lib/pinguin/request'
 require 'lib/pinguin/host'
 
 set :views, File.dirname(__FILE__) + '/views'
-set :public, File.dirname(__FILE__) + '/public'
+set :public, './public'
 
 get '/' do
   @hosts = Pinguin::Host.all
