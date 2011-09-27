@@ -6,7 +6,16 @@ module Pinguin
     field :timestamp, :type => DateTime, :default => lambda{ Time.now.utc }
     belongs_to :host, :class_name => "Pinguin::Host"
 
+    def self.data_points_by_host(host_id = nil, options = {})
+      from = options[:from] || (Time.now - 365 * 86400)
+      to = options[:to] || Time.now
+      date_range = (from..to)
+      data = self.where(:host_id => host_id).where(:timestamp.gte => from, :timestamp.lte => to)
+      data.collect{|item| [item['timestamp'].to_i * 1000, item['time']]}
+    end
+
     def self.summary(host_id = nil)
+      host_id = host_id.to_s
       map     = "
         function () {
           emit(this.host_id, {successes:this.success, totalTime:this.time, totalRequests: 1});

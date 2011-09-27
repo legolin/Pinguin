@@ -1,0 +1,15 @@
+%html{:style => 'margin: 0; padding: 0; width: 100%; height: 100%;'}
+  %head
+    %script{:type => 'text/javascript', :src => '/javascripts/excanvas.min.js'}
+    %script{:type => 'text/javascript', :src => '/javascripts/jquery.min.js'}
+    %script{:type => 'text/javascript', :src => '/javascripts/jquery.flot.min.js'}
+    %script{:type => 'text/javascript', :src => '/javascripts/jquery.flot.selection.min.js'}
+    %style{:type => 'text/css'}
+      :plain
+        body {font-family: sans-serif;}
+        th, td { padding: 2px}
+        .text-left {text-align: left}
+        .text-center{text-align: center}
+
+  %body{:style => 'margin: 0; padding: 0; width: 100%; height: 100%;'}
+    =yield
