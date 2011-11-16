@@ -3,8 +3,7 @@ require 'bundler'
 
 Bundler.require
 
-mongoid_config_file = File.join('config', 'mongoid.yml')
-Mongoid.load!(mongoid_config_file)
+BASE_DIR = File.dirname(__FILE__)
 
 require 'app/stats'
 run Sinatra::Application

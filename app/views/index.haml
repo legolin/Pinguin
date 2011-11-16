@@ -6,11 +6,11 @@
       %th.text-left Host
       %th.text-center Uptime
       %th.text-center Avg response
-    -for host in @hosts
+    -@hosts.each do |host_id, host|
       %tr
-        %td.text-left= host.url
-        %td.text-center= "#{(@summaries[host._id]['uptime'] * 10000).to_i / 100.0} %"
-        %td.text-center= @summaries[host._id]['avgRequestTime'] == 1.0/0 ?  'N/A' : (@summaries[host._id]['avgRequestTime'] * 100).to_i / 100.0
+        %td.text-left= host['uri']
+        %td.text-center= "#{(@summaries[host_id]['uptime'] * 10000).to_i / 100.0} %"
+        %td.text-center= @summaries[host_id]['average_request_time'] == 1.0/0 ?  'N/A' : (@summaries[host_id]['average_request_time'] * 100).to_i / 100.0
 
   %br
 

@@ -2,9 +2,14 @@ module Pinguin
 
   class Penguin
 
-    def initialize(config_path)
+    def initialize(config_path, cassandra_connection)
       # Get configs
       @configs = YAML::load(File.open(config_path))
+      @@cassandra_connection = cassandra_connection
+    end
+
+    def connection
+      @@cassandra_connection
     end
 
     def run
@@ -25,11 +30,13 @@ module Pinguin
             request.password = config['http-auth']['password']
           end
 
+          # Post each uri to the hosts table
+          connection.insert(:hosts, name, {'uri' => config['url']})
+
           # Set on-complete handler
           request.on_complete do |response|
-            host = Host.find_or_create_by(:url => config['url'])
-            host.requests.create :time => response.time, :success => response.success?, :timestamp => Time.now
-            
+            puts "'#{config['url']}'"
+            connection.insert(:requests, config['url'], Time.now.utc.to_i => {'time' => response.time, 'success' => response.success?})
           end
           requests[name] = request
       end
@@ -44,6 +51,11 @@ module Pinguin
         sleep 5 * 60
       end
     end
+    
+    def self.connection
+      @cassandra_connection
+    end
+
   end
 
 end

@@ -1,8 +1,13 @@
 module Pinguin
-  class Host
-    include Mongoid::Document
-    field :url, :type => String
-    field :name, :type => String
-    has_many :requests, :class_name => "Pinguin::Request"
+  class Host < CassandraRecord
+    
+    def self.get_by_host_id(some_id)
+      connection.get(:hosts, some_id.to_s)
+    end
+
+    def self.all
+      connection.get_range(:hosts)
+    end
+
   end
 end
